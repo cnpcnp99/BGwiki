@@ -6,19 +6,29 @@ import axios from 'axios';
 function App() {
   const [User, setUser] = useState([])
   useEffect(() => {
-    axios.post('/api/users').then(res => {
-      if(res.data){
-        console.log('------')
-        console.log(res.data)
-        setUser(res.data)
+    // axios.post('/api/users').then(res => {
+    //   if(res.data){
+    //     // console.log(res.data)
+    //     setUser(res.data)
+    //   }
+    //   else{
+    //     alert('failed')
+    //     console.log(res.data)
+    //   }
+    // }).catch(e => {
+    //   console.log(e)
+    // })
+    axios.post('api/users/save').then(res => {
+      if(res){
+        axios.post('api/users/find').then(res => {
+          if(res.data){
+            console.log(res.data)
+          }
+          else{
+            alert('failed to find User')
+          }
+        })
       }
-      else{
-        console.log('=====')
-        alert('failed')
-        console.log(res.data)
-      }
-    }).catch(e => {
-      console.log(e)
     })
   }, [])
 
