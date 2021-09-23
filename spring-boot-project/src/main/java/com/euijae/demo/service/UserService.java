@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -20,9 +21,19 @@ public class UserService {
 
     public User findUserById(Long id) {
         User user = userRepository.findOne(id);
-        System.out.println(user.getId());
         return user;
     }
 
 
+    public void registerUser(User user) {
+        userRepository.save(user);
+    }
+
+    public Boolean login(String email, String password) {
+        List<User> userList = userRepository.findByEmail(email);
+        if(userList.size() == 0)
+            return false;
+        User user = userList.get(0);
+        return user.getPassword().equals(password);
+    }
 }

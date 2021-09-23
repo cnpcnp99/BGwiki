@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,7 +19,13 @@ public class UserRepository {
     }
 
     public User findOne(Long original_id) {
-        System.out.println("Rep findOne");
+        // System.out.println("Rep findOne");
         return em.find(User.class, original_id);
+    }
+
+    public List<User> findByEmail(String email) {
+        return em.createQuery("select u from User u where u.email = :email", User.class)
+                .setParameter("email", email)
+                .getResultList();
     }
 }
