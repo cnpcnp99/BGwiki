@@ -3,27 +3,24 @@ package com.euijae.demo.controller;
 import com.euijae.demo.domain.User;
 import com.euijae.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserApiController {
 
     private final UserService userService;
 
-//    @PostMapping("/api/users")
-//    public User user() {
-//        System.out.println("/api/users ON");
-//
-//
-//        return user;
-//    }
     @PostMapping("/api/users/login")
     public Map<String, String> loginUser(@RequestBody Map<String, Object>loginForm) {
+        System.out.println("/api/users/login ON");
         String email = loginForm.get("email").toString();
         String password = loginForm.get("password").toString();
         Boolean result = userService.login(email, password);
@@ -83,8 +80,10 @@ public class UserApiController {
 
     }
 
-    @GetMapping("/abc")
-    public String str(){
-        return "abc";
-    }
+//    @GetMapping("/api/abc")
+//    public ResponseEntity<String> str(){
+//        return ResponseEntity.ok("helloo");
+//    }
+
+
 }
