@@ -44,9 +44,9 @@ public class UserApiController {
                 .name(userForm.get("name").toString())
                 .email(userForm.get("email").toString())
                 .phoneNumber("010-0001-0002")
+                .password(userForm.get("password").toString())
                 .createdAt(LocalDateTime.now())
                 .createdBy("admin")
-                .password(userForm.get("password").toString())
                 .build();
         userService.registerUser(user);
         System.out.println("Register user:(maybe) SUCCESS");
@@ -61,7 +61,7 @@ public class UserApiController {
     @PostMapping("/api/users/save")
     public void saveUser() {
         User user = new User();
-        user.setEmail("tub123@naver.com");
+        user.setEmail("tub12345@naver.com");
         user.setName("jeong");
         user.setPhoneNumber("010-0001-0002");
         user.setCreatedAt(LocalDateTime.now());

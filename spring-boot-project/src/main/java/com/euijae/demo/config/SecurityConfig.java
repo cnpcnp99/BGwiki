@@ -2,6 +2,7 @@ package com.euijae.demo.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -14,8 +15,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                //.antMatchers("/", "/api/abc","/api/auth/**", "api/users/**").permitAll()
+                .antMatchers("/", "/api/abc","/api/auth/**", "api/users/**").permitAll()
                 .anyRequest().permitAll();
 //                .and()
 //                .formLogin()
@@ -28,8 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**");
+    }
+
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8080");
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:3000");
     }
 }
